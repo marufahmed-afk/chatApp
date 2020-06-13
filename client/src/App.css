@@ -1,0 +1,57 @@
+:root {
+  --main-bg-color: #7904eb;
+  --main-txt-color: white;
+  --header-color: #ff00a1;
+}
+
+body {
+  background-color: var(--main-bg-color);
+  color: var(--main-txt-color);
+}
+
+.container {
+  margin-right: auto; /* 1 */
+  margin-left: auto; /* 1 */
+
+  padding-right: 15px; /* 3 */
+  padding-left: 15px; /* 3 */
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 15px 0 15px;
+}
+
+.chat-header {
+  background-color: #110458;
+  padding: 3px 10px;
+  text-align: center;
+  color: var(--header-color);
+  border-radius: 25px 25px 0 0;
+  margin-bottom: 0;
+}
+
+.chat-container {
+  background-color: white;
+  height: 81.5vh;
+  color: black;
+  margin-top: 0;
+}
+
+.message-text {
+  width: 100%;
+  letter-spacing: 0;
+  float: left;
+  font-size: 1.1em;
+  word-wrap: break-word;
+}
+
+.message {
+  background-color: gray;
+  border-radius: 20px;
+  padding: 5px 20px;
+  color: white;
+  display: inline-block;
+  max-width: 80%;
+}

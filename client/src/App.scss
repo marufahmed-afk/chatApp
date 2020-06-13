@@ -1,0 +1,142 @@
+$main-bg-color: #7904eb;
+$main-txt-color: white;
+$header-text-color: #ff00a1;
+$header-color: #110458;
+
+body {
+  background-color: $main-bg-color;
+  color: $main-txt-color;
+}
+
+.container {
+  margin-right: auto; /* 1 */
+  margin-left: auto; /* 1 */
+
+  padding-right: 15px; /* 3 */
+  padding-left: 15px; /* 3 */
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 15px 0 15px;
+
+  img {
+    z-index: 2;
+  }
+}
+
+.chat-box {
+  .chat-header {
+    background-color: $header-color;
+    padding: 3px 10px;
+    text-align: center;
+    color: $header-text-color;
+    border-radius: 25px 25px 0 0;
+    margin-bottom: 0;
+  }
+
+  .chat-wrapper {
+    background-color: white;
+    height: 81.5vh;
+    color: black;
+    margin-top: 0;
+  }
+
+  .chat-input {
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    width: 100%;
+
+    .form-btn {
+      background-color: $header-color;
+      padding: 12px 12px;
+      border-radius: 10px;
+
+      .send {
+        width: 20px;
+      }
+    }
+
+    input {
+      border-radius: 10px;
+      padding: 10px 15px;
+      border: solid $header-color;
+      margin-right: 20px;
+      margin-left: 10px;
+      width: 65%;
+    }
+  }
+}
+
+.message-container {
+  padding: 10px 10px;
+  position: relative;
+  .username {
+    padding: 5px 5px;
+    margin: 0;
+  }
+
+  .message-text {
+    width: 100%;
+    letter-spacing: 0;
+    float: left;
+    font-size: 1.1em;
+    word-wrap: break-word;
+  }
+
+  .message {
+    background-color: lightgray;
+    border-radius: 20px;
+    padding: 5px 20px;
+    color: black;
+    display: inline-block;
+    max-width: 80%;
+  }
+
+  .message-time {
+    position: absolute;
+    right: 50px;
+
+    .time {
+      margin: 0;
+    }
+  }
+}
+
+.group-box {
+  display: none;
+  z-index: 1;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: $header-color;
+  height: 91%;
+  width: 200px;
+  padding: 70px 25px 0 15px;
+  box-shadow: 10px 10px 8px 10px black;
+
+  h1 {
+    font-size: 1.3em;
+    color: $header-text-color;
+  }
+
+  .group-item {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 7px 15px;
+    width: 90%;
+    border-radius: 7px;
+    margin-bottom: 15px;
+
+    h3 {
+      font-size: 1em;
+      margin: 0;
+    }
+  }
+
+  .logout {
+    position: absolute;
+    bottom: 0;
+  }
+}
