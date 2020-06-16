@@ -10,9 +10,9 @@ const ChatItem = () => {
         <p className="message-text">
           Hello this is my first message Hello this is my first message
         </p>
-      </div>
-      <div className="message-time">
-        <p className="time">2:35</p>
+        <div className="message-time">
+          <p className="time">2:35</p>
+        </div>
       </div>
     </div>
   );

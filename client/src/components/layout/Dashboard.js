@@ -6,9 +6,9 @@ import Groups from "../groups/Groups";
 
 const Dashboard = () => {
   return (
-    <div className="main-grid">
-      <Groups />
+    <div className="main-grid container">
       <Chatbox />
+      <Groups />
     </div>
   );
 };

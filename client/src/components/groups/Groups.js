@@ -6,10 +6,9 @@ import GroupItem from "./GroupItem";
 const Groups = () => {
   return (
     <div className="group-box">
-      <h1 className="title">GROUPS</h1>
+      <h2 className="title">GROUPS</h2>
       <GroupItem />
       <GroupItem />
-      <p className="logout">Logout</p>
     </div>
   );
 };
