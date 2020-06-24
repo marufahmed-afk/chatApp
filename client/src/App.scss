@@ -21,9 +21,15 @@ body {
   img {
     z-index: 2;
   }
+
+  .logout-btn {
+    z-index: 2;
+  }
 }
 
 .chat-box {
+  position: relative;
+
   .chat-header {
     text-align: center;
     color: $header-text-color;
@@ -35,12 +41,23 @@ body {
       height: 75vh;
       overflow: hidden;
       overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+      }
     }
     .chat-input {
       position: absolute;
-      bottom: 20px;
-      margin: 0 15px;
-      width: 88%;
+      width: 100%;
 
       .form-btn {
         background-color: white;
@@ -53,6 +70,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
 
         .send {
           width: 70%;
@@ -68,7 +86,7 @@ body {
         input {
           background-color: transparent;
           border: none;
-          width: 75%;
+          width: 77%;
           border-radius: 8px;
           height: 45px;
           font-size: 16px;
@@ -128,13 +146,12 @@ body {
   right: 0;
   top: 0;
   background: $main-bg-color;
-  height: 91%;
+  height: 91.3vh;
   width: 200px;
   padding: 70px 25px 0 15px;
   box-shadow: 10px 10px 8px 10px black;
 
-  h1 {
-    font-size: 1.3em;
+  .title {
     color: $header-text-color;
   }
 
@@ -144,16 +161,65 @@ body {
     width: 90%;
     border-radius: 7px;
     margin-bottom: 15px;
+    cursor: pointer;
 
     h3 {
       font-size: 1em;
       margin: 0;
     }
   }
+}
 
-  .logout {
-    position: absolute;
-    bottom: 0;
+.intro {
+  display: none;
+}
+
+.form-box {
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .form-header {
+    text-align: center;
+    color: $header-text-color;
+    margin-bottom: 35px;
+  }
+
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+
+    label {
+      margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 10px 15px;
+      border-radius: 7px;
+      margin-bottom: 20px;
+      border: none;
+      outline: none;
+      color: white;
+      font-size: 16px;
+    }
+
+    .auth-form-btn {
+      padding: 10px 15px;
+      border-radius: 7px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: $header-color;
+      color: white;
+      margin-top: 20px;
+      margin-bottom: 25px;
+      cursor: pointer;
+    }
   }
 }
 
@@ -162,9 +228,19 @@ body {
     background-color: $main-bg-color-large;
   }
 
+  .navbar {
+    .ham {
+      display: none;
+    }
+
+    .logout-btn {
+      cursor: pointer;
+    }
+  }
+
   .main-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     gap: 40px;
   }
 
@@ -181,10 +257,19 @@ body {
     border-radius: 15px;
     padding-bottom: 20px;
     margin-top: 20px;
+    height: 85vh;
+
+    .chat-input {
+      position: absolute;
+      bottom: 15px !important;
+      left: 15px;
+      width: calc(100% - 30px) !important;
+    }
 
     .chat-wrapper {
       .chat-content {
-        height: 65vh;
+        max-height: 70vh;
+        margin-bottom: 40px;
       }
     }
   }
@@ -197,7 +282,7 @@ body {
     margin-top: 20px;
     background: $main-bg-color;
     border-radius: 15px;
-    height: 80vh;
+    height: auto;
     width: inherit;
     padding: 0px 15px;
     box-shadow: none;
@@ -219,10 +304,43 @@ body {
         margin: 0;
       }
     }
+  }
 
-    .logout {
-      position: absolute;
-      bottom: 0;
+  .form-box {
+    background-color: $main-bg-color;
+    border-radius: 15px;
+    width: 400px;
+
+    .form-header {
+      text-align: center;
+      color: $header-text-color;
+      margin-bottom: 35px;
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .auth-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    justify-content: center;
+    align-items: center;
+
+    .intro {
+      display: block;
+      margin-left: 50px;
+      img {
+        width: 40%;
+      }
+
+      .intro-text {
+        font-size: 3em;
+        font-weight: bold;
+        width: 600px;
+      }
     }
   }
 }

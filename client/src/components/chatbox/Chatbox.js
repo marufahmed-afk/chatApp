@@ -18,6 +18,13 @@ const Chatbox = () => {
           <ChatItem />
           <ChatItem />
           <ChatItem />
+          <ChatItem />
+          <ChatItem />
+          <ChatItem />
+          <ChatItem />
+          <ChatItem />
+          <ChatItem />
+          <ChatItem />
         </div>
 
         <div className="chat-input">
