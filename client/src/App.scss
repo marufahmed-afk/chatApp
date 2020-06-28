@@ -13,6 +13,11 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+a {
+  color: white;
+  text-decoration: none;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -221,6 +226,22 @@ body {
       cursor: pointer;
     }
   }
+}
+
+.alert {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  padding: 10px 20px;
+  color: white;
+}
+
+.alert-danger {
+  background-color: red;
+}
+
+.alert-success {
+  background-color: green;
 }
 
 @media (min-width: 1024px) {

@@ -8,13 +8,13 @@ const { loginValidation } = require("../validation");
 
 const User = require("../models/User");
 
-//@route    GET api/users
+//@route    GET api/auth
 //@desc     Get logged in User
 //@access   Public
 
 router.get("/", auth, async (req, res) => {
   try {
-    const user = await await User.findById(req.user.id);
+    const user = await User.findById(req.user.id);
     res.json(user);
   } catch (err) {
     console.error(err.message);
@@ -22,7 +22,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-//@route    POST api/users
+//@route    POST api/auth
 //@desc     Authorize User and get token
 //@access   Public
 
