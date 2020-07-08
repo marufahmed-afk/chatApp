@@ -7,6 +7,11 @@ $main-txt-color: white;
 $header-text-color: #ff00a1;
 $header-color: #7904eb;
 
+* {
+  border: none;
+  outline: none;
+}
+
 body {
   background-color: $main-bg-color;
   color: $main-txt-color;
@@ -30,6 +35,22 @@ a {
   .logout-btn {
     z-index: 2;
   }
+}
+
+.btn {
+  background-color: white;
+  height: 30px;
+  width: 30px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-form {
+  background-color: $main-bg-color-large !important;
+}
+
+.openSidebar {
+  display: block !important;
 }
 
 .chat-box {
@@ -155,6 +176,18 @@ a {
   width: 200px;
   padding: 70px 25px 0 15px;
   box-shadow: 10px 10px 8px 10px black;
+
+  .group-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    button {
+      img {
+        width: 100%;
+      }
+    }
+  }
 
   .title {
     color: $header-text-color;

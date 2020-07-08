@@ -6,3 +6,9 @@ export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
+export const LOGOUT = "LOGOUT";
+export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR";
+
+//Groups
+export const GET_GROUPS = "GET_GROUPS";
+export const GROUPS_ERR = "GROUPS_ERR";

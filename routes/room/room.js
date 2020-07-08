@@ -7,7 +7,7 @@ const router = express.Router();
 
 //Get all rooms for a User
 
-router.get("/rooms", auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     //we use user.id because JWT token object has id not _id like mongo which we do in the middleware "auth.js"
     const rooms = await Room.find({
