@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout } from "../../actions/auth";
 import { toggleSidebar } from "../../actions/interaction";
+import Dashboard from "./Dashboard";
 
 const Navbar = ({
   auth: { isAuthenticated, loading },
@@ -16,15 +17,20 @@ const Navbar = ({
 
   return (
     <div className="navbar container">
-      <img
-        src={require("../../assets/logo.svg")}
-        alt=""
-        className="brand-logo"
-      />
+      <Link to={Dashboard}>
+        <img
+          src={require("../../assets/logo.svg")}
+          alt=""
+          className="brand-logo"
+        />
+      </Link>
 
-      <h3 className="logout-btn" onClick={logout}>
-        Logout
-      </h3>
+      {isAuthenticated && (
+        <h3 className="logout-btn" onClick={logout}>
+          Logout
+        </h3>
+      )}
+
       <img
         src={require("../../assets/ham.svg")}
         alt=""
