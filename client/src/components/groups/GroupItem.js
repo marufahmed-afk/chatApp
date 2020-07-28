@@ -1,11 +1,18 @@
-import React from "react";
+import React from 'react';
+import { connect } from 'react-redux';
 
-const GroupItem = ({ groupName }) => {
+import { setCurrentGroup } from '../../actions/groups';
+
+const GroupItem = ({ group, setCurrentGroup }) => {
+  const handleClick = () => {
+    setCurrentGroup(group);
+  };
+
   return (
-    <div className="group-item">
-      <h3 className="group-name">{groupName}</h3>
+    <div className='group-item' onClick={handleClick}>
+      <h3 className='group-name'>{group.name}</h3>
     </div>
   );
 };
 
-export default GroupItem;
+export default connect(null, { setCurrentGroup })(GroupItem);

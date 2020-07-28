@@ -1,30 +1,51 @@
-const express = require("express");
-const connectDB = require("./config/db");
+const express = require('express');
+const connectDB = require('./config/db');
+const socketio = require('socket.io');
+const http = require('http');
+const cors = require('cors');
+
+const router = require('./router');
 
 const app = express();
+const server = http.Server(app);
+const io = socketio(server);
 
 //Connecting to the database
 connectDB();
 
 //Init Middleware
 app.use(express.json({ extended: false }));
+app.use(cors());
+//app.use(router);
 
 //Define routes
-app.use("/api/users", require("./routes/users"));
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/chat", require("./routes/chat/chat"));
-app.use("/api/room", require("./routes/room/room"));
+app.use('/api/users', require('./routes/users'));
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/chat', require('./routes/chat/chat'));
+app.use('/api/room', require('./routes/room/room'));
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
 
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   );
 }
 
+io.on('connection', (socket) => {
+  console.log('New client connected');
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+  socket.on('join', ({ name }) => {
+    console.log('Client', name);
+  });
+});
+
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`hello port ${PORT}`);
 });
+
+module.exports = router;
