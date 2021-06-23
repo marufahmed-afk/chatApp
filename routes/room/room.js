@@ -67,23 +67,20 @@ router.post('/', auth, async (req, res) => {
 //Updating a Room to add new messages
 
 router.put('/:id', auth, async (req, res) => {
-  const { name, users, messages } = req.body;
+  const { username, text } = req.body;
 
   const roomFields = {};
-  if (name) roomFields.name = name;
-  if (users) roomFields.users = users;
-  if (messages) roomFields.messages = messages;
+  if (username) roomFields.username = username;
+  if (text) roomFields.text = text;
 
   try {
     let room = await Room.findById(req.params.id);
 
     if (!room) return res.status(404).json({ msg: 'Room not found' });
 
-    room = await Room.findByIdAndUpdate(
-      req.params.id,
-      { $set: roomFields },
-      { new: true }
-    );
+    room.messages = [...room.messages, roomFields];
+
+    room.save();
 
     res.json(room);
   } catch (err) {

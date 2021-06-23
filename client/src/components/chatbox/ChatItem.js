@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
+import Moment from 'react-moment';
+import moment from 'moment';
 
-const ChatItem = () => {
+const ChatItem = ({ message: { username, text, date } }) => {
   return (
-    <div className="message-container">
-      <div className="message-user">
-        <p className="username">Maruf</p>
+    <div className='message-container'>
+      <div className='message-user'>
+        <p className='username'>{username}</p>
       </div>
-      <div className="message">
-        <p className="message-text">
-          Hello this is my first message Hello this is my first message
-        </p>
-        <div className="message-time">
-          <p className="time">2:35</p>
+      <div className='message'>
+        <p className='message-text'>{text}</p>
+        <div className='message-time'>
+          <p className='time'>{moment(date).startOf('hour').fromNow()}</p>
         </div>
       </div>
     </div>

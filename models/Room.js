@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const RoomSchema = mongoose.Schema({
   name: {
@@ -8,18 +8,19 @@ const RoomSchema = mongoose.Schema({
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "users",
+    ref: 'users',
   },
   users: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
+      ref: 'users',
     },
   ],
   messages: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "chats",
+      username: '',
+      text: '',
+      date: { type: Date, default: Date.now },
     },
   ],
   date: {
@@ -28,4 +29,4 @@ const RoomSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("room", RoomSchema);
+module.exports = mongoose.model('room', RoomSchema);

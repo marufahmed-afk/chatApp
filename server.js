@@ -10,6 +10,8 @@ const app = express();
 const server = http.Server(app);
 const io = socketio(server);
 
+const User = require('./models/User');
+
 //Connecting to the database
 connectDB();
 
@@ -34,11 +36,23 @@ if (process.env.NODE_ENV === 'production') {
 
 io.on('connection', (socket) => {
   console.log('New client connected');
+
+  socket.on('join', ({ username, name }) => {
+    console.log('Client', username, name);
+  });
+  socket.on('sendMessage', (message, id, callback) => {
+    const user = User.findById(id).then(() => {
+      // fix promises
+      console.log('success');
+      console.log('user : ', user, message);
+      io.to(user.name).emit('message', { user: user.username, text: message });
+      console.log('message sent');
+      callback();
+    });
+  });
+
   socket.on('disconnect', () => {
     console.log('Client disconnected');
-  });
-  socket.on('join', ({ name }) => {
-    console.log('Client', name);
   });
 });
 

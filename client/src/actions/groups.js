@@ -1,7 +1,13 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 
-import { GET_GROUPS, GROUPS_ERR, CREATE_GROUP, SET_CURRENT } from './types';
+import {
+  GET_GROUPS,
+  GROUPS_ERR,
+  CREATE_GROUP,
+  SET_CURRENT,
+  UPDATE_MESSAGES,
+} from './types';
 
 export const getGroups = () => async (dispatch) => {
   try {
@@ -9,6 +15,27 @@ export const getGroups = () => async (dispatch) => {
 
     dispatch({
       type: GET_GROUPS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GROUPS_ERR,
+    });
+  }
+};
+
+export const updateMessages = (username, text, id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const res = await axios.put(`/api/room/${id}`, { username, text }, config);
+
+    dispatch({
+      type: UPDATE_MESSAGES,
       payload: res.data,
     });
   } catch (err) {

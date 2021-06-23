@@ -14,3 +14,4 @@ export const GET_GROUPS = 'GET_GROUPS';
 export const GROUPS_ERR = 'GROUPS_ERR';
 export const CREATE_GROUP = 'CREATE_GROUP';
 export const SET_CURRENT = 'SET_CURRENT';
+export const UPDATE_MESSAGES = 'UPDATE_MESSAGES';
