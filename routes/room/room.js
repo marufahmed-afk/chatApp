@@ -20,6 +20,21 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+//Get all messages from a room
+
+router.get('/:id', auth, async (req, res) => {
+  try {
+    let room = await Room.findById(req.params.id);
+
+    if (!room) return res.status(404).json({ msg: 'Room not found' });
+
+    res.json(room.messages);
+  } catch (err) {
+    console.error(er.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 //Creating a new Room
 
 router.post('/', auth, async (req, res) => {

@@ -7,6 +7,7 @@ import {
   CREATE_GROUP,
   SET_CURRENT,
   UPDATE_MESSAGES,
+  GET_MESSAGES,
 } from './types';
 
 export const getGroups = () => async (dispatch) => {
@@ -15,6 +16,22 @@ export const getGroups = () => async (dispatch) => {
 
     dispatch({
       type: GET_GROUPS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GROUPS_ERR,
+    });
+  }
+};
+
+export const getMessages = (id) => async (dispatch) => {
+  console.log('messsages');
+  try {
+    const res = await axios.get(`/api/room/${id}`);
+
+    dispatch({
+      type: GET_MESSAGES,
       payload: res.data,
     });
   } catch (err) {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
 
-import { updateMessages } from '../../actions/groups';
+import { updateMessages, getMessages } from '../../actions/groups';
 
 // Component imports
 import ChatItem from './ChatItem';
@@ -10,25 +10,46 @@ import ChatItem from './ChatItem';
 let socket;
 
 const Chatbox = ({
-  groups: { currentGroup, loading },
+  groups: { currentGroup, loading, storedMessages },
   auth: { user },
   updateMessages,
+  getMessages,
 }) => {
   let url = window.location.protocol + '//' + window.location.host + '/';
 
   const [text, setText] = useState('');
   const [newText, setNewText] = useState('');
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    if (storedMessages.length > 0) {
+      setMessages(storedMessages);
+    }
+  }, [storedMessages]);
 
   useEffect(() => {
     socket = io(url);
 
     if (currentGroup !== null) {
+      getMessages(currentGroup._id);
       const { name } = currentGroup;
       const { username } = user;
       socket.emit('join', { username, name }, () => {});
     }
 
-    console.log(socket);
+    socket.on('message', (message) => {
+      console.log(message, 'client message');
+      setMessages((prev) => [...prev, message]);
+    });
+
+    socket.on('connected', () => {
+      console.log('connected');
+    });
+
+    socket.on('welcome', () => {
+      console.log('first');
+      // console.log('connected', username);
+    });
 
     return () => {
       socket.emit('disconnect');
@@ -36,17 +57,19 @@ const Chatbox = ({
     };
   }, [currentGroup]);
 
-  useEffect(() => {
-    socket.on('message', (message) => {
-      setNewText(message);
-    });
-  }, [newText]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('messageUpdate: ', user.username, text, currentGroup._id);
+    console.log('messageUpdate: ', user.username, text, currentGroup.name);
+    console.log(user._id, 'id', currentGroup.name);
 
-    socket.emit('sendMessage', text, user._id, () => setText(''));
+    socket.emit(
+      'sendMessage',
+      text,
+      user._id,
+      currentGroup.name,
+      currentGroup._id,
+      () => setText('')
+    );
 
     //updateMessages(user.username, text, currentGroup._id);
   };
@@ -56,15 +79,14 @@ const Chatbox = ({
     currentGroup !== null && (
       <div className='chat-box'>
         <div className='chat-header'>
-          <h2 className='chat-title'>Siege Clan</h2>
+          <h2 className='chat-title'>{currentGroup?.name}</h2>
         </div>
         <div className='chat-wrapper'>
           <div className='chat-content'>
-            {currentGroup &&
-              currentGroup.messages.map((message) => (
-                <ChatItem key={message._id} message={message} />
+            {messages &&
+              messages.map((message, index) => (
+                <ChatItem key={index} message={message} />
               ))}
-            <ChatItem message={newText} />
           </div>
 
           <div className='chat-input'>
@@ -76,15 +98,14 @@ const Chatbox = ({
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                 />
+                <div className='form-btn'>
+                  <img
+                    src={require('../../assets/send.svg')}
+                    alt=''
+                    className='send'
+                  />
+                </div>
               </form>
-
-              <div className='form-btn'>
-                <img
-                  src={require('../../assets/send.svg')}
-                  alt=''
-                  className='send'
-                />
-              </div>
             </div>
           </div>
         </div>
@@ -98,4 +119,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { updateMessages })(Chatbox);
+export default connect(mapStateToProps, { updateMessages, getMessages })(
+  Chatbox
+);

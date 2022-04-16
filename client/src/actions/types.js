@@ -11,6 +11,7 @@ export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR';
 
 //Groups
 export const GET_GROUPS = 'GET_GROUPS';
+export const GET_MESSAGES = 'GET_MESSAGES';
 export const GROUPS_ERR = 'GROUPS_ERR';
 export const CREATE_GROUP = 'CREATE_GROUP';
 export const SET_CURRENT = 'SET_CURRENT';

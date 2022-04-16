@@ -1,5 +1,6 @@
 import {
   GET_GROUPS,
+  GET_MESSAGES,
   GROUPS_ERR,
   CREATE_GROUP,
   SET_CURRENT,
@@ -10,6 +11,7 @@ const initialState = {
   groups: [],
   currentGroup: null,
   loading: true,
+  storedMessages: [],
 };
 
 export default function (state = initialState, action) {
@@ -18,6 +20,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         groups: action.payload,
+        loading: false,
+      };
+    case GET_MESSAGES:
+      return {
+        ...state,
+        storedMessages: action.payload,
         loading: false,
       };
     case CREATE_GROUP:

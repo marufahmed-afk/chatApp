@@ -1,5 +1,5 @@
 //Validation
-const Joi = require("@hapi/joi");
+const Joi = require('@hapi/joi');
 
 //Register Validation
 const registerValidation = (data) => {
@@ -20,7 +20,7 @@ const loginValidation = (data) => {
   return schema.validate(data);
 };
 
-//Comic Validation
+//Chat Validation
 const chatValidation = (data) => {
   const schema = Joi.object({
     text: Joi.string().required(),

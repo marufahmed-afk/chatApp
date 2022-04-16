@@ -11,6 +11,11 @@ const server = http.Server(app);
 const io = socketio(server);
 
 const User = require('./models/User');
+const { saveMessage } = require('./serverCalls/message');
+
+const sendMessage = () => {
+  console.log('sent');
+};
 
 //Connecting to the database
 connectDB();
@@ -39,17 +44,20 @@ io.on('connection', (socket) => {
 
   socket.on('join', ({ username, name }) => {
     console.log('Client', username, name);
+    socket.join(name);
   });
-  socket.on('sendMessage', (message, id, callback) => {
-    const user = User.findById(id).then(() => {
-      // fix promises
+  socket.on(
+    'sendMessage',
+    async (message, id, groupName, groupId, callback) => {
+      const user = await User.findById(id);
       console.log('success');
-      console.log('user : ', user, message);
-      io.to(user.name).emit('message', { user: user.username, text: message });
+      console.log('user : ', user, message, groupName);
+      io.to(groupName).emit('message', { user: user.username, text: message });
       console.log('message sent');
+      saveMessage(message, groupId, id);
       callback();
-    });
-  });
+    }
+  );
 
   socket.on('disconnect', () => {
     console.log('Client disconnected');
