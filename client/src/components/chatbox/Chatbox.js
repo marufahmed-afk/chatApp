@@ -117,13 +117,13 @@ const Chatbox = ({
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                 />
-                <div className='form-btn'>
+                <button className='form-btn'>
                   <img
                     src={require('../../assets/send.svg')}
                     alt=''
                     className='send'
                   />
-                </div>
+                </button>
               </form>
             </div>
           </div>
