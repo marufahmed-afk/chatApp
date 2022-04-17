@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
 
@@ -20,10 +20,23 @@ const Chatbox = ({
   const [text, setText] = useState('');
   const [newText, setNewText] = useState('');
   const [messages, setMessages] = useState([]);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   useEffect(() => {
     if (storedMessages.length > 0) {
       setMessages(storedMessages);
+    } else {
+      setMessages([]);
     }
   }, [storedMessages]);
 
@@ -70,8 +83,6 @@ const Chatbox = ({
       currentGroup._id,
       () => setText('')
     );
-
-    //updateMessages(user.username, text, currentGroup._id);
   };
 
   return (
@@ -83,10 +94,18 @@ const Chatbox = ({
         </div>
         <div className='chat-wrapper'>
           <div className='chat-content'>
-            {messages &&
+            {messages.length > 0 ? (
               messages.map((message, index) => (
                 <ChatItem key={index} message={message} />
-              ))}
+              ))
+            ) : (
+              <p
+                style={{ color: 'white', padding: '10px', textAlign: 'center' }}
+              >
+                Start your conversation!
+              </p>
+            )}
+            <div ref={messagesEndRef} />
           </div>
 
           <div className='chat-input'>

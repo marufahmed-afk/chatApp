@@ -21,6 +21,9 @@ const AddGroup = ({ createGroup, openForm, setOpenForm }) => {
     <div className=' form-box'>
       <form className='auth-form' onSubmit={handleSubmit}>
         <h2>Create/Join a Group</h2>
+        <small style={{ marginBottom: '10px' }}>
+          *you can join your friend's room by entering their group name
+        </small>
         <label htmlFor='name'>Group Name</label>
         <input type='text' name='name' onChange={handleChange} />
         <input className='auth-form-btn' type='submit' value='GO!' />

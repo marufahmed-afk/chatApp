@@ -68,6 +68,8 @@ a {
       height: 75vh;
       overflow: hidden;
       overflow-y: scroll;
+      display: flex;
+      flex-direction: column;
 
       &::-webkit-scrollbar {
         width: 5px;
@@ -327,6 +329,8 @@ a {
       .chat-content {
         max-height: 70vh;
         margin-bottom: 40px;
+        display: flex;
+        flex-direction: column;
       }
     }
   }

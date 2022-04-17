@@ -52,9 +52,13 @@ io.on('connection', (socket) => {
       const user = await User.findById(id);
       console.log('success');
       console.log('user : ', user, message, groupName);
-      io.to(groupName).emit('message', { user: user.username, text: message });
+      io.to(groupName).emit('message', {
+        username: user.username,
+        text: message,
+        date: Date.now(),
+      });
       console.log('message sent');
-      saveMessage(message, groupId, id);
+      saveMessage(message, groupId, user);
       callback();
     }
   );

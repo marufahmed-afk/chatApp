@@ -1,8 +1,8 @@
 const Room = require('../models/Room');
 
-const saveMessage = async (message, groupId, userId) => {
+const saveMessage = async (message, groupId, user) => {
   const roomFields = {};
-  if (userId) roomFields.username = userId;
+  if (user) roomFields.username = user.username;
   if (message) roomFields.text = message;
 
   try {
