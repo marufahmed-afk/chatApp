@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { ErrorMessage, Formik } from 'formik';
+import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
+
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string()
+    .min(6, 'Password has to be at least 6 characters long!')
+    .required('Required'),
+});
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -40,29 +49,54 @@ const Login = ({ login, isAuthenticated }) => {
       </div>
       <div className='form-box'>
         <h2 className='form-header'>Login</h2>
-        <form className='auth-form' onSubmit={(e) => handleSubmit(e)}>
-          <label htmlFor='email'>Email</label>
-          <input
-            type='text'
-            name='email'
-            value={email}
-            onChange={(e) => handleChange(e)}
-          />
 
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            name='password'
-            value={password}
-            onChange={(e) => handleChange(e)}
-          />
+        <Formik
+          initialValues={{
+            email: '',
+            password: '',
+          }}
+          validationSchema={LoginSchema}
+          onSubmit={async (values, actions) => {
+            await login({ email: values.email, password: values.password });
+            actions.setSubmitting(false);
+          }}
+        >
+          {(props) => (
+            <form className='auth-form' onSubmit={props.handleSubmit}>
+              <label htmlFor='email'>Email</label>
+              <input
+                type='email'
+                name='email'
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.email}
+              />
 
-          <input className='auth-form-btn' type='submit' />
-          <small>
-            Don't have an account?
-            <Link to='/register'> Sign Up</Link>
-          </small>
-        </form>
+              <ErrorMessage name='email'>
+                {(msg) => <div className='errorText'>{msg}</div>}
+              </ErrorMessage>
+
+              <label htmlFor='password'>Password</label>
+              <input
+                type='password'
+                name='password'
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.password}
+              />
+
+              <ErrorMessage name='password'>
+                {(msg) => <div className='errorText'>{msg}</div>}
+              </ErrorMessage>
+
+              <input className='auth-form-btn' type='submit' />
+              <small>
+                Don't have an account?
+                <Link to='/register'> Sign Up</Link>
+              </small>
+            </form>
+          )}
+        </Formik>
       </div>
     </div>
   );

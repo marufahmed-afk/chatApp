@@ -1,9 +1,21 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { ErrorMessage, Formik } from 'formik';
+import * as Yup from 'yup';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
+const RegisterSchema = Yup.object().shape({
+  username: Yup.string()
+    .min(6, 'Username has to be at least 6 characters long!')
+    .required('Required'),
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string()
+    .min(6, 'Password has to be at least 6 characters long!')
+    .required('Required'),
+});
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -48,45 +60,68 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
       <div className='form-box'>
         <h2 className='form-header'>Register</h2>
-        <form className='auth-form' onSubmit={(e) => handleSubmit(e)}>
-          <label htmlFor='username'>Username</label>
-          <input
-            type='text'
-            name='username'
-            value={username}
-            onChange={(e) => handleChange(e)}
-          />
+        <Formik
+          initialValues={{
+            username: '',
+            email: '',
+            password: '',
+          }}
+          validationSchema={RegisterSchema}
+          onSubmit={async (values, actions) => {
+            await register({
+              username: values.username,
+              email: values.email,
+              password: values.password,
+            });
+            actions.setSubmitting(false);
+          }}
+        >
+          {(props) => (
+            <form className='auth-form' onSubmit={props.handleSubmit}>
+              <label htmlFor='username'>Username</label>
+              <input
+                type='text'
+                name='username'
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.username}
+              />
+              <ErrorMessage name='username'>
+                {(msg) => <div className='errorText'>{msg}</div>}
+              </ErrorMessage>
 
-          <label htmlFor='email'>Email</label>
-          <input
-            type='text'
-            name='email'
-            value={email}
-            onChange={(e) => handleChange(e)}
-          />
+              <label htmlFor='email'>Email</label>
+              <input
+                type='email'
+                name='email'
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.email}
+              />
+              <ErrorMessage name='email'>
+                {(msg) => <div className='errorText'>{msg}</div>}
+              </ErrorMessage>
 
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            name='password'
-            value={password}
-            onChange={(e) => handleChange(e)}
-          />
+              <label htmlFor='password'>Password</label>
+              <input
+                type='password'
+                name='password'
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.password}
+              />
+              <ErrorMessage name='password'>
+                {(msg) => <div className='errorText'>{msg}</div>}
+              </ErrorMessage>
 
-          <label htmlFor='password2'>Confirm Password</label>
-          <input
-            type='password'
-            name='password2'
-            value={password2}
-            onChange={(e) => handleChange(e)}
-          />
-
-          <input className='auth-form-btn' type='submit' />
-          <small>
-            Already have an account?
-            <Link to='/login'> Sign In</Link>
-          </small>
-        </form>
+              <input className='auth-form-btn' type='submit' />
+              <small>
+                Already have an account?
+                <Link to='/login'> Sign In</Link>
+              </small>
+            </form>
+          )}
+        </Formik>
       </div>
     </div>
   );
